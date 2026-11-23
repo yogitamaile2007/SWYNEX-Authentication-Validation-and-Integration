@@ -1,0 +1,73 @@
+{
+  "info": {
+    "name": "SWYNEX Task 3 - Student API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "apiKey", "value": "change-me-locally" }
+  ],
+  "item": [
+    {
+      "name": "1. POST without API key (expect 401)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\"name\":\"Madhuri\",\"email\":\"madhuri@example.com\",\"age\":21,\"course\":\"CS\"}" },
+        "url": "{{baseUrl}}/api/students"
+      }
+    },
+    {
+      "name": "2. POST invalid body (expect 400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "X-API-KEY", "value": "{{apiKey}}" }
+        ],
+        "body": { "mode": "raw", "raw": "{\"name\":\"\",\"email\":\"not-an-email\",\"age\":2}" },
+        "url": "{{baseUrl}}/api/students"
+      }
+    },
+    {
+      "name": "3. POST valid body (expect 201)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "X-API-KEY", "value": "{{apiKey}}" }
+        ],
+        "body": { "mode": "raw", "raw": "{\"name\":\"Madhuri\",\"email\":\"madhuri@example.com\",\"age\":21,\"course\":\"CS\"}" },
+        "url": "{{baseUrl}}/api/students"
+      }
+    },
+    {
+      "name": "4. GET all (public, expect 200)",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/students" }
+    },
+    {
+      "name": "5. GET missing id (expect 404)",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/students/9999" }
+    },
+    {
+      "name": "6. PUT update (expect 200)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "X-API-KEY", "value": "{{apiKey}}" }
+        ],
+        "body": { "mode": "raw", "raw": "{\"name\":\"Madhuri B\",\"email\":\"madhuri@example.com\",\"age\":22,\"course\":\"IT\"}" },
+        "url": "{{baseUrl}}/api/students/1"
+      }
+    },
+    {
+      "name": "7. DELETE (expect 204)",
+      "request": {
+        "method": "DELETE",
+        "header": [{ "key": "X-API-KEY", "value": "{{apiKey}}" }],
+        "url": "{{baseUrl}}/api/students/1"
+      }
+    }
+  ]
+}
